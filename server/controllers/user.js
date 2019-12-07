@@ -30,11 +30,11 @@ exports.getUserById = (req, res) => {
 
 exports.saveUser = (req, res) => {
   const UserData = req.body;
+  const newUser = new User(UserData);
   //const userId = req.user && req.user.sub;
-  const User = new User(UserData);
-  //User.userId = userId;
+  //newUser.userId = userId;
 
-  User.save((err, createdUser) => {
+  newUser.save((err, createdUser) => {
     if (err) {
       return res.status(422).send(err);
     }

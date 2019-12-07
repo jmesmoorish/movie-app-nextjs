@@ -7,12 +7,13 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user');
 const routes = require('../routes');
-//const User = require('./models/user');
+const User = require('./models/user');
 //const authService = require('./services/auth');
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const handle = app.getRequestHandler()
+const handle = routes.getRequestHandler(app);
+//const handle = app.getRequestHandler()
 
 const filePath = './data.json'
 const fs = require('fs')
@@ -34,6 +35,20 @@ app.prepare().then(() => {
   const server = express();
   server.use(compression());
   server.use(bodyParser.json());
+
+  //######################### Start User Insert hardcoded #######################
+  const newUser = new User({name:'Joe Doe', email: 'joe.doe@gmail.com', password: '1234567'});
+  
+  newUser.save((err, createdUser) => {
+    if (err) {
+      console.log('Error: '+err)
+      //return res.status(422).send(err);
+    }
+    console.log('User: '+createdUser)
+    //return res.json(createdUser);
+  });
+
+ //######################### End User Insert hardcoded #######################
 
   server.use('/api/v1/users', userRoutes);
 
@@ -111,10 +126,10 @@ app.prepare().then(() => {
   // })
 
   // we are handling all of the request comming to our server
-  // server.get('*', (req, res) => {
-  //   // next.js is handling requests and providing pages where we are navigating to
-  //   return handle(req, res)
-  // })
+  server.get('*', (req, res) => {
+     // next.js is handling requests and providing pages where we are navigating to
+     return handle(req, res)
+   })
 
   // server.post('*', (req, res) => {
   //   // next.js is handling requests and providing pages where we are navigating to

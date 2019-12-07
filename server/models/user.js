@@ -8,9 +8,10 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     index: true,
   },
-  //emailVerified: {
-  //  type: Boolean,
-  //},
+  emailVerified: {
+    type: Boolean,
+    default:false
+  },
   password: {
     type: String,
     minlength: 6,
@@ -18,6 +19,10 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  role: {
+    type: Number,
+    default: 2 // 1- admin | 2- user
+  }
  });
 
  //export default mongoose.models.User || mongoose.model('User', UserSchema);
