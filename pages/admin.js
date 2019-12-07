@@ -1,48 +1,46 @@
 
 import React from 'react'
+import DataTable from 'react-data-table-component';
 
 // functional component - arrow function
-const About = () => {
+const Admin = () => {
   const message = '...'
+
+  const data = [{ id: 1, name: 'Joe Doe', email: 'joe.doe@gmail.com' }];
+  const columns = [
+        {
+            name: 'Name',
+            selector: 'name',
+            sortable: true,
+        },
+        {
+            name: 'Email',
+            selector: 'email',
+            sortable: true,
+            right: true,
+        },
+        ];
+
   return (
-    <div>Admin Page - {message}</div>
-  )
+    <div>
+        <div className="home-page">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                    <DataTable
+                        title="Users List"
+                        columns={columns}
+                        data={data}
+                    />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+)
+ 
 }
-// WHEN TO USE:
-// 1. for smaller components
-// 2. reusable components
-// 3. presentional components , patialy right, we can use HOOKS and specify state
-
-// const About = () => {
-//   const message = 'Hello World'
-//   return (
-//     <h1>Hello About Page - {message}</h1>
-//   )
-// }
-
-// const About = () => {
-//   const message = 'Hello World'
-//   return React.createElement('h1', null, 'I am genereting this with createElement')
-// }
-
-// unctional component - normal function
-// functional component - normal function
-// function About() {
-//   return (
-//     <h1>Hello About Page</h1>
-//   )
-// }
-
-
-// class About extends React.Component {
-//   render() {
-//     return (
-//       <h1>Hello I am class component</h1>
-//     )
-//   }
-// }
 
 
 
-
-export default About
+export default Admin
